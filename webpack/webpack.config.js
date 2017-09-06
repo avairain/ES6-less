@@ -9,7 +9,8 @@ module.exports = {
     entry: './src/main.js',
     output: {
         path: path.join(__dirname, './dist'),
-        filename: 'js/bundle.js'
+        filename: 'js/bundle.js',
+        publicPath: '../'
     },
     module: {
         rules: [
@@ -19,8 +20,8 @@ module.exports = {
             { test: /\.(jpg|gif|png|bmp)$/, use: 'url-loader?limit=1024&name=images/[hash:7]-[name].[ext]'},
             {
                 test: /\.less$/,
-                use: extractLESS.extract({use:['css-loader', 'less-loader'],publicPath:'../'}),
-                
+                use: extractLESS.extract({ use: ['css-loader', 'less-loader'], publicPath: '../' }),
+
             },
         ]
     },
@@ -28,7 +29,7 @@ module.exports = {
         extractCSS,
         extractLESS,
         new htmlWebpackPlugin({
-            template: "html-withimg-loader!"+path.join(__dirname, "./src/jsp/index.html"),//模版
+            template: "html-withimg-loader!" + path.join(__dirname, "./src/jsp/index.html"),//模版
             filename: "jsp/index.html", //文件名
             minify: {
                 collapseWhitespace: true, // 合并空白字符
@@ -38,13 +39,13 @@ module.exports = {
 
         }),
         new webpack.optimize.UglifyJsPlugin({
-            commpress:{
-                warnings:false  //移除警告
+            commpress: {
+                warnings: false  //移除警告
             }
         }),
         //压缩js
         new webpack.DefinePlugin({
-            'process.env.NODE_ENV':'"production"'  //进一步压缩JS 但效果不明显
+            'process.env.NODE_ENV': '"production"'  //进一步压缩JS 但效果不明显
         }),
         new CleanWebpackPlugin(['dist']),
 
